@@ -1,5 +1,9 @@
 <?php
 session_start();
+if(!isset($_SESSION['role']) || $_SESSION['role'] !== 'Admin') {
+  header('Location: login.php');
+  exit;
+}
 include "../../../../config/koneksi.php";
 
 if ($_GET['act'] == "tambah") {

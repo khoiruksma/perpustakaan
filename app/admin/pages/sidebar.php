@@ -41,10 +41,13 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="anggota"><i class="fa fa-circle-o"></i> Data Anggota</a></li>
-                    <li><a href="penerbit"><i class="fa fa-circle-o"></i> Data Penerbit</a></li>
-                    <li><a href="administrator"><i class="fa fa-circle-o"></i> Administrator</a></li>
-                    <li><a href="data-peminjaman"><i class="fa fa-circle-o"></i> Data Peminjaman</a></li>
+            <li><a href="dashboard"><i class="fa fa-home"></i> Dashboard</a></li>
+            <li><a href="anggota"><i class="fa fa-circle-o"></i> Data Anggota</a></li>
+            <li><a href="form-peminjaman"><i class="fa fa-circle-o"></i> Peminjaman Buku</a></li>
+            <li><a href="form-pengembalian"><i class="fa fa-circle-o"></i> Pengembalian Buku</a></li>
+            <li><a href="penerbit"><i class="fa fa-circle-o"></i> Data Penerbit</a></li>
+            <li><a href="administrator"><i class="fa fa-circle-o"></i> Administrator</a></li>
+            <li><a href="list-peminjaman"><i class="fa fa-circle-o"></i> Data Peminjaman</a></li>
                 </ul>
             </li>
             <li class="treeview">

@@ -1,9 +1,24 @@
 <?php
 session_start();
-//------------------------------::::::::::::::::::::------------------------------\\
-// Dibuat oleh FA Team di PT. Belajar Koding \\
-//------------------------------::::::::::::::::::::------------------------------\\
-?>
+require 'config/koneksi.php';
+
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+$query = mysqli_query($conn, "SELECT * FROM user WHERE username='$username' AND password='$password'");
+if(mysqli_num_rows($query) === 1) {
+  $row = mysqli_fetch_assoc($query);
+  $_SESSION['id_user']   = $row['id_user'];
+  $_SESSION['username']  = $row['username'];
+  $_SESSION['fullname']  = $row['fullname'];
+  $_SESSION['role']      = $row['role'];
+  header('Location: index.php');
+  exit;
+} else {
+  header('Location: login.php?error=invalid');
+  exit;
+}?>
+
 <!DOCTYPE html>
 <html>
 

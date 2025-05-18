@@ -1,4 +1,9 @@
 <?php
+session_start();
+if(!isset($_SESSION['role']) || $_SESSION['role'] !== 'Admin') {
+  header('Location: login.php');
+  exit;
+}
 function GetBadgePemberitahuan()
 {
     echo '<i class="fa fa-bell-o"></i>';
