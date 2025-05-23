@@ -2,22 +2,51 @@
 session_start();
 require 'config/koneksi.php';
 
-$username = $_POST['username'];
-$password = $_POST['password'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-$query = mysqli_query($conn, "SELECT * FROM user WHERE username='$username' AND password='$password'");
-if(mysqli_num_rows($query) === 1) {
-  $row = mysqli_fetch_assoc($query);
-  $_SESSION['id_user']   = $row['id_user'];
-  $_SESSION['username']  = $row['username'];
-  $_SESSION['fullname']  = $row['fullname'];
-  $_SESSION['role']      = $row['role'];
-  header('Location: index.php');
-  exit;
-} else {
-  header('Location: login.php?error=invalid');
-  exit;
-}?>
+    if (!empty($_POST['username']) && !empty($_POST['password'])) {
+
+        $username = trim($_POST['username']);
+        $password = trim($_POST['password']);
+
+        // Gunakan koneksi dari file koneksi.php
+        $conn = mysqli_connect("localhost", "root", "", "db_perpustakaan");
+
+        // Cek koneksi
+        if (!$conn) {
+            die("Koneksi gagal: " . mysqli_connect_error());
+        }
+
+        // Gunakan prepared statement
+        $stmt = mysqli_prepare($conn, "SELECT * FROM user WHERE username = ? AND password = ?");
+        mysqli_stmt_bind_param($stmt, "ss", $username, $password);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        if (mysqli_num_rows($result) === 1) {
+            $row = mysqli_fetch_assoc($result);
+            $_SESSION['id_user']   = $row['id_user'];
+            $_SESSION['username']  = $row['username'];
+            $_SESSION['fullname']  = $row['fullname'];
+            $_SESSION['role']      = $row['role'];
+            header('Location: index.php');
+            exit;
+        } else {
+            $_SESSION['gagal_login'] = 'Username atau password salah.';
+            header('Location: login.php');
+            exit;
+        }
+
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+
+    } else {
+        $_SESSION['gagal_login'] = 'Mohon isi username dan password.';
+        header('Location: login.php');
+        exit;
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html>
